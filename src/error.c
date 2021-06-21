@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 13:07:58 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/21 17:30:05 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/21 18:28:27 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@ int	error_handler(int error, t_data *data)
 	write(2 ,"Error\n", 6);
 	if (error == INVALID_INPUT_ERROR)
 		write(2, "Invalid input!\n", 15);
-	else if (error == THREAD_CREATE_ERROR)
-		write(2, "Thread creation error\n", 22);
-	else if (error == THREAD_JOIN_ERROR)
-		write(2, "Thread join error\n", 18);
 	else if (error == errno)
 	{
 		write(2, "errno code: ", 12);
@@ -29,8 +25,12 @@ int	error_handler(int error, t_data *data)
 	}
 	else
 		write(2, "Unknown!\n", 9);
-	if (data)
+	if (!data)
+		return (1);
+	if (data->thread)
 		free(data->thread);
+	if (data->fork)
+		free(data->fork);
 	return (1);
 }
 

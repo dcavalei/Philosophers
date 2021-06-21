@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 12:30:02 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/21 17:30:11 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/21 18:16:44 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,16 @@
 
 typedef struct s_data
 {
-	int			num_of_philo;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			num_of_eat;
-	pthread_t	*thread;
+	int				num_of_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				num_of_eat;
+	pthread_t		*thread;
+	pthread_mutex_t	*fork;
 }				t_data;
+
+
 
 int	error_handler(int error, t_data *data);
 int	validate_user_input(char **argv);
@@ -42,7 +45,7 @@ int	ft_atoi(const char *str);
 void	ft_putnbr_fd(int n, int fd);
 int	init_data(t_data *data, int argc, char **argv);
 void	*routine(void *content);
-
+int	create_and_join_threads(t_data *data);
 /*
 **	OK
 */

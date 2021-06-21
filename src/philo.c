@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 12:59:26 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/21 17:31:18 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/21 18:32:28 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,15 @@ int	main(int argc, char **argv)
 		return (error_handler(errno, &data));
 	i = -1;
 	while (++i < data.num_of_philo)
-	{
-		if (pthread_create(&(data.thread[i]), NULL, &routine, NULL) != 0)
-			return(error_handler(THREAD_CREATE_ERROR, &data));
-	}
+		pthread_mutex_init(&(data.fork[i]), NULL);
+	if (!create_and_join_threads(&data))
+		return (error_handler(errno, &data));
 	i = -1;
 	while (++i < data.num_of_philo)
-	{
-		if (pthread_join(data.thread[i], NULL) != 0)
-			return(error_handler(THREAD_JOIN_ERROR, &data));
-	}
+		pthread_mutex_destroy(&(data.fork[i]));
 	printf("No more threads :C\n");
 	free(data.thread);
+	free(data.fork);
 	return(0);
 }
 
@@ -46,8 +43,13 @@ int	init_data(t_data *data, int argc, char **argv)
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->num_of_eat = ft_atoi(argv[5]);
+	data->thread = NULL;
+	data->fork = NULL;
 	data->thread = malloc(sizeof(pthread_t) * (data->num_of_philo));
 	if (!(data->thread))
+		return (0);
+	data->fork = malloc(sizeof(pthread_mutex_t) * (data->num_of_philo));
+	if (!(data->fork))
 		return (0);
 	return (1);
 }
@@ -58,4 +60,23 @@ void	*routine(void *content)
 	printf("Hello! I am a thread :D\n");
 	sleep(2);
 	return NULL;
+}
+
+int	create_and_join_threads(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->num_of_philo)
+	{
+		if (pthread_create(&(data->thread[i]), NULL, &routine, NULL) != 0)
+			return(1);
+	}
+	i = -1;
+	while (++i < data->num_of_philo)
+	{
+		if (pthread_join(data->thread[i], NULL) != 0)
+			return(0);
+	}
+	return (1);
 }

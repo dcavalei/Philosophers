@@ -6,14 +6,14 @@
 #    By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 12:29:07 by dcavalei          #+#    #+#              #
-#    Updated: 2021/06/21 17:28:46 by dcavalei         ###   ########.fr        #
+#    Updated: 2021/06/22 16:00:48 by dcavalei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC			= $(shell find src -type f -name "*.c")
 OBJ			= $(SRC:.c=.o)
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -pthread
+CFLAGS		= -Wall -Wextra -Werror -g -pthread
 NAME		= philo
 
 RED			= \033[0;31m

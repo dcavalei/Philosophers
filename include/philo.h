@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 12:30:02 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/21 18:16:44 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/22 18:40:08 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@
 # include <stdlib.h>
 # include <errno.h>
 
-# define INVALID_INPUT_ERROR -1
-# define THREAD_CREATE_ERROR -2
-# define THREAD_JOIN_ERROR -3
+
+# define INVALID_INPUT -1
+# define TOO_MANY_THREADS -2
+# define HARD_CAP 4096
 
 typedef struct s_data
 {

@@ -6,7 +6,7 @@
 #    By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 12:29:07 by dcavalei          #+#    #+#              #
-#    Updated: 2021/06/22 16:00:48 by dcavalei         ###   ########.fr        #
+#    Updated: 2021/06/23 13:22:44 by dcavalei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,21 +16,17 @@ CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror -g -pthread
 NAME		= philo
 
-RED			= \033[0;31m
 GREEN		= \033[0;32m
-ORANGE		= \033[0;33m
-BLUE		= \033[1;34m
-YELLOW		= \033[1;33m
 NC			= \033[0m
 
 all:		$(NAME)
 
 .c.o:
 			@echo "Creating object: $@"
-			@$(CC) $(CFLAGS) -Iinclude -c $< -o $@
+			@$(CC) $(CFLAGS) -Iinc -c $< -o $@
 
 $(NAME):	$(OBJ)
-			@$(CC) -o $(NAME) $(CFLAGS) -Iinclude $(OBJ)
+			@$(CC) -o $(NAME) $(CFLAGS) -Iinc $(OBJ)
 
 clean:
 			@echo "${GREEN}Removing object files...${NC}"

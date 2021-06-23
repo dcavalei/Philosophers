@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 12:30:02 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/22 18:40:08 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/23 18:15:05 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,25 @@ typedef struct s_data
 	pthread_mutex_t	*fork;
 }				t_data;
 
+typedef struct s_content
+{
+	t_data	*data;
+	int		philo_id;
+}				t_content;
 
+void		init_data(t_data *data);
+t_content	*content_handler(t_data *data, int index);
+suseconds_t	timer(void);
 
-int	error_handler(int error, t_data *data);
-int	validate_user_input(char **argv);
+int			error_handler(int error, t_data *data);
+int			validate_user_input(char **argv);
 
-int	ft_isnbr(char *number);
-int	ft_atoi(const char *str);
-void	ft_putnbr_fd(int n, int fd);
-int	init_data(t_data *data, int argc, char **argv);
-void	*routine(void *content);
-int	create_and_join_threads(t_data *data);
+int			ft_isnbr(char *number);
+int			ft_atoi(const char *str);
+void		ft_putnbr_fd(int n, int fd);
+int			data_setup(t_data *data, int argc, char **argv);
+void		*routine(void *content);
+int			create_and_join_threads(t_data *data);
 /*
 **	OK
 */

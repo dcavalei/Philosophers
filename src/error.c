@@ -6,14 +6,13 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 13:07:58 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/25 19:27:19 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/25 22:49:42 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static void	output_error(int error);
-static void	free_data(t_data *data);
 
 int	error_handler(int error, t_data *data)
 {
@@ -52,7 +51,7 @@ static void	output_error(int error)
 		write(2, "Unknown!\n", 9);
 }
 
-static void	free_data(t_data *data)
+void	free_data(t_data *data)
 {
 	if (!data)
 		return ;

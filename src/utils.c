@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 11:31:54 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/25 20:13:31 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/25 23:51:29 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_content	*content_handler(t_data *data, int index)
 		return (NULL);
 	content->data = data;
 	content->philo_id = index;
+	content->last_meal = 0;
 	return (content);
 }
 

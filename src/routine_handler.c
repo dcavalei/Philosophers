@@ -6,20 +6,22 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 17:27:41 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/25 19:52:55 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/26 00:30:51 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	lock_forks(void *content);
-static void	unlock_forks(void *content);
-static void	start_eating(void *content);
-static void	start_sleeping(void *content);
+static int	lock_forks(void *content);
+static int	unlock_forks(void *content);
+static int	start_eating(void *content);
+static int	start_sleeping(void *content);
+
+
 
 void	*routine(void *content)
 {
-	suseconds_t	time_start;
+	// suseconds_t	time_start;
 	// suseconds_t	time_last_meal;
 	t_data		*data;
 	int			philo_id;
@@ -30,12 +32,17 @@ void	*routine(void *content)
 	times_to_eat = data->num_of_eat;
 	while (times_to_eat--)
 	{
-		time_start = timer();
-		lock_forks(content);
-		start_eating(content);
-		//usleep(data->time_to_eat);
-		unlock_forks(content);
-		start_sleeping(content);
+		if (((t_content *)content)->last_meal == 0)
+			((t_content *)content)->last_meal = timer();
+		if (!lock_forks(content))
+			break ;
+		if (!start_eating(content))
+			break ;
+		if (!unlock_forks(content))
+			break ;
+		if(!start_sleeping(content))
+			break ;
+		
 		//usleep(data->time_to_eat);
 		//usleep(500000);
 		//time_last_meal = timer();
@@ -47,29 +54,46 @@ void	*routine(void *content)
 	return (NULL);
 }
 
-static void	start_eating(void *content)
+static int	start_eating(void *content)
 {
 	t_data		*data;
 	int			philo_id;
+	long		time_start;
 
 	data = ((t_content *)content)->data;
 	philo_id = ((t_content *)content)->philo_id;
-
-	printf(CYN"[%.4li]\t"NC"Philosopher "GRN"%i"NC" is "YEL"eating"NC"\n", timer(), philo_id + 1);
+	time_start = timer();
+	printf(CYN"[%.4li]\t"NC"Philosopher "GRN"%i"NC" is "YEL"eating"NC"\n", time_start, philo_id + 1);
+	while (timer() - time_start < data->time_to_eat)
+	{
+		if (data->someone_died)
+			return (0);
+		usleep(1);
+	}
+	return (1);
 }
 
-static void	start_sleeping(void *content)
+static int	start_sleeping(void *content)
 {
 	t_data		*data;
 	int			philo_id;
+	long		time_start;
 
 	data = ((t_content *)content)->data;
 	philo_id = ((t_content *)content)->philo_id;
+	time_start = timer();
 
-	printf(CYN"[%.4li]\t"NC"Philosopher "GRN"%i"NC" is "YEL"sleeping"NC"\n", timer(), philo_id + 1);
+	printf(CYN"[%.4li]\t"NC"Philosopher "GRN"%i"NC" is "YEL"sleeping"NC"\n", time_start, philo_id + 1);
+	while (timer() - time_start < data->time_to_sleep)
+	{
+		if (data->someone_died)
+			return (0);
+		usleep(1);
+	}
+	return (1);
 }
 
-static void	lock_forks(void *content)
+static int	lock_forks(void *content)
 {
 	t_data		*data;
 	int			philo_id;
@@ -78,38 +102,26 @@ static void	lock_forks(void *content)
 	philo_id = ((t_content *)content)->philo_id;
 	if (philo_id % 2)
 	{
-		pthread_mutex_lock(&(data->fork[philo_id]));
-		if(data->lock[philo_id] == 0)
-			data->lock[philo_id] = 1;
-		else
-		{
-			int	start = timer();
-			while (1)
-			{
-				if (is_dead())
-				{
-					
-				}
-			}
-			usleep(data->)
-		}
-		
-
-
+		if (!wait_for_fork(content, data, philo_id))
+			return (0);
 		printf(CYN"[%.4li]\t"NC"Philosopher "GRN"%i"NC" has taken a "YEL"fork"NC"\n", timer(), philo_id + 1);
-		pthread_mutex_lock(&(data->fork[(philo_id + 1) % data->num_of_philo]));
+		if (!wait_for_fork(content, data, (philo_id + 1) % data->num_of_philo))
+			return (0);
 		printf(CYN"[%.4li]\t"NC"Philosopher "GRN"%i"NC" has taken a "YEL"fork"NC"\n", timer(), philo_id + 1);
 	}
 	else
 	{
-		pthread_mutex_lock(&(data->fork[(philo_id + 1) % data->num_of_philo]));
+		if (!wait_for_fork(content, data, (philo_id + 1) % data->num_of_philo))
+			return (0);
 		printf(CYN"[%.4li]\t"NC"Philosopher "GRN"%i"NC" has taken a "YEL"fork"NC"\n", timer(), philo_id + 1);
-		pthread_mutex_lock(&(data->fork[philo_id]));
+		if (!wait_for_fork(content, data, philo_id))
+			return (0);
 		printf(CYN"[%.4li]\t"NC"Philosopher "GRN"%i"NC" has taken a "YEL"fork"NC"\n", timer(), philo_id + 1);
 	}
+	return (1);
 }
 
-static void	unlock_forks(void *content)
+static int	unlock_forks(void *content)
 {
 	t_data		*data;
 	int			philo_id;
@@ -118,11 +130,16 @@ static void	unlock_forks(void *content)
 	philo_id = ((t_content *)content)->philo_id;
 	if (philo_id % 2)
 	{
-		pthread_mutex_unlock(&(data->fork[philo_id]));
-		pthread_mutex_unlock(&(data->fork[(philo_id + 1) % data->num_of_philo]));
+		data->lock[philo_id] = 0;
+		data->lock[(philo_id + 1) % data->num_of_philo] = 0;
 	}
 	else
 	{
-		pthread_mutex_unlock(&(data->fork[(philo_id + 1) % data->num_of_philo]));
-		pthread_mutex_unlock(&(data->fork[philo_id]));
-	}}
+		data->lock[(philo_id + 1) % data->num_of_philo] = 0;
+		data->lock[philo_id] = 0;
+	}
+	if (data->someone_died)
+		return (0);
+	((t_content *)content)->last_meal = timer();
+	return (1);
+}

@@ -6,7 +6,7 @@
 #    By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 12:29:07 by dcavalei          #+#    #+#              #
-#    Updated: 2021/06/23 13:22:44 by dcavalei         ###   ########.fr        #
+#    Updated: 2021/06/24 17:21:56 by dcavalei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,7 @@ all:		$(NAME)
 			@$(CC) $(CFLAGS) -Iinc -c $< -o $@
 
 $(NAME):	$(OBJ)
-			@$(CC) -o $(NAME) $(CFLAGS) -Iinc $(OBJ)
-
+			@$(CC) -o $(NAME) $(CFLAGS) -Iinc $(OBJ) simple_debug/debugs.a
 clean:
 			@echo "${GREEN}Removing object files...${NC}"
 			@rm -f $(OBJ)

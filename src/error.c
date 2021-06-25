@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 13:07:58 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/22 18:47:28 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/25 19:27:19 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	validate_user_input(char **argv)
 	i = 0;
 	while (argv[++i])
 	{
-		if (!ft_isnbr(argv[i]) || ft_atoi(argv[i]) <= 0)
+		if (!ft_isnbr(argv[i]) || ft_atoi(argv[i]) < 0)
 			return (0);
 	}
 	return (1);
@@ -60,4 +60,6 @@ static void	free_data(t_data *data)
 		free(data->thread);
 	if (data->fork)
 		free(data->fork);
+	if (data->lock)
+		free(data->lock);
 }

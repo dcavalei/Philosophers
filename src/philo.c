@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 12:59:26 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/25 19:56:37 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/26 01:36:17 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 	free(data.thread);
 	free(data.fork);
 	free(data.lock);
-	check_leaks();
+	//check_leaks();
 	return(0);
 }
 

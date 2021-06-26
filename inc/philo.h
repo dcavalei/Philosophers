@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 12:30:02 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/25 23:35:06 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/26 15:38:22 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@
 # define INVALID_INPUT -1
 # define TOO_MANY_THREADS -2
 # define HARD_CAP 4096
+# define FORK_TAKEN "this fork is mine!!!"
+# define SLEEPING "let me take a nap!!!"
+# define THINKING "why do i exist? hmmm"
+# define EATING "i love cheese burger"
+# define SATISFIED "spaghetti di mama!!!"
+
 
 typedef struct s_data
 {
@@ -62,6 +68,8 @@ int	death_handler(t_data *data, int philo_index);
 int			ft_isnbr(char *number);
 int			ft_atoi(const char *str);
 void		ft_putnbr_fd(int n, int fd);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+
 int			data_setup(t_data *data, int argc, char **argv);
 void		*routine(void *content);
 int			create_and_join_threads(t_data *data);
@@ -69,5 +77,6 @@ int			create_and_join_threads(t_data *data);
 /*
 **	OK
 */
+void	output_action(t_data *data, int philo_id, char *defined_message);
 
 #endif

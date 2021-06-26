@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 11:31:54 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/25 23:51:29 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/26 10:49:42 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	data_setup(t_data *data, int argc, char **argv)
 	int	i;
 
 	data->num_of_philo = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]) * 1000;
-	data->time_to_eat = ft_atoi(argv[3]) * 1000;
-	data->time_to_sleep = ft_atoi(argv[4]) * 1000;
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->num_of_eat = ft_atoi(argv[5]);
 	data->thread = malloc(sizeof(pthread_t) * (data->num_of_philo));

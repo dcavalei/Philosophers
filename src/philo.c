@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 12:59:26 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/26 01:36:17 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/26 15:42:47 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int	main(int argc, char **argv)
 	while (++i < data.num_of_philo)
 		pthread_mutex_destroy(&(data.fork[i]));
 	pthread_mutex_destroy(&(data.dead_mutex));
-
-	printf("No more threads AKA all finished :C\n");
 	free(data.thread);
 	free(data.fork);
 	free(data.lock);

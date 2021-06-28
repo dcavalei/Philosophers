@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/25 11:31:54 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/26 10:49:42 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/28 20:42:39 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,9 @@ int	data_setup(t_data *data, int argc, char **argv)
 	{
 		if (pthread_mutex_init(&(data->fork[i]), NULL) != 0)
 			return (0);
-		data->lock[i] = 0;
+		data->lock[i] = -1;
 	}
-	if (pthread_mutex_init(&(data->dead_mutex), NULL) != 0)
-		return (0);
-	return (1);
+	return (!(pthread_mutex_init(&(data->dead_mutex), NULL) != 0));
 }
 
 t_content	*content_handler(t_data *data, int index)
@@ -69,9 +67,9 @@ t_content	*content_handler(t_data *data, int index)
 	return (content);
 }
 
-suseconds_t	timer(void)
+long	timer(void)
 {
-	struct timeval 		time;
+	struct timeval		time;
 	static time_t		start_sec = 0;
 	static suseconds_t	start_micro_sec = 0;
 
@@ -81,5 +79,19 @@ suseconds_t	timer(void)
 		start_sec = time.tv_sec;
 		start_micro_sec = time.tv_usec;
 	}
-	return (((time.tv_sec - start_sec) * 1000) + (time.tv_usec - start_micro_sec) / 1000);
+	return (((time.tv_sec - start_sec) * 1000)
+		+ (time.tv_usec - start_micro_sec) / 1000);
+}
+
+int	validate_user_input(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv[++i])
+	{
+		if (!ft_isnbr(argv[i]) || ft_atoi(argv[i]) < 0)
+			return (0);
+	}
+	return (1);
 }

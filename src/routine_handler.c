@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 17:27:41 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/28 20:46:52 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/28 23:41:17 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,16 @@ int	start_eating(void *content, t_data *data, int index)
 	long		time_start;
 
 	time_start = timer();
-	((t_content *)content)->last_meal = timer();
-	printf("TIMMERMEMRMRMERMEMR %li\n", ((t_content *)content)->last_meal);
+	((t_content *)content)->last_meal = time_start;
 	output_action(data, index, EATING);
 	while (timer() - time_start < data->time_to_eat)
 	{
-		// if (is_dead(content))
-			// return (death_handler(data, index));
+		if (is_dead(content))
+			return (death_handler(data, index));
 		if (data->someone_died)
 			return (0);
-		usleep(1);
+		usleep(1000);
 	}
-	// printf("[%li] Philo %i LAST MEAL-> %li\n", timer(), ((t_content *)content)->philo_id + 1, time_start);
-	// ((t_content *)content)->last_meal = timer();
-
 	return (1);
 }
 
@@ -72,7 +68,7 @@ int	start_sleeping(void *content, t_data *data, int index)
 	{
 		if (data->someone_died || is_dead(content))
 			return (death_handler(data, index + 1));
-		usleep(1);
+		usleep(1000);
 	}
 	return (1);
 }

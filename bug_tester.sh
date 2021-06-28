@@ -1,3 +1,3 @@
 while true; do
-./philo 3 200 60 60 1
+./philo 4 410 200 200 2
 done

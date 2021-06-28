@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/21 12:59:26 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/28 19:57:44 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/28 23:46:22 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static int	create(t_data *data)
 			output_error(THREAD_CREATE_ERROR);
 			return (0);
 		}
+		usleep(100);
 	}
 	return (1);
 }

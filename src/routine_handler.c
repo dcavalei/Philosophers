@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 17:27:41 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/28 23:41:17 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/29 11:52:34 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	*routine(void *content)
 		if (!start_sleeping(content, data, index))
 			break ;
 		output_action(data, index, THINKING);
+		usleep(1000);
 	}
 	output_action(data, index, SATISFIED);
 	free(content);
@@ -53,7 +54,7 @@ int	start_eating(void *content, t_data *data, int index)
 			return (death_handler(data, index));
 		if (data->someone_died)
 			return (0);
-		usleep(1000);
+		usleep(100);
 	}
 	return (1);
 }
@@ -68,7 +69,7 @@ int	start_sleeping(void *content, t_data *data, int index)
 	{
 		if (data->someone_died || is_dead(content))
 			return (death_handler(data, index + 1));
-		usleep(1000);
+		usleep(100);
 	}
 	return (1);
 }

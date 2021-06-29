@@ -6,7 +6,7 @@
 /*   By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 16:02:30 by dcavalei          #+#    #+#             */
-/*   Updated: 2021/06/28 23:40:37 by dcavalei         ###   ########.fr       */
+/*   Updated: 2021/06/29 11:41:32 by dcavalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	wait_for_fork(void *content, t_data *data, int index)
 	while (!data->someone_died)
 	{
 		if (index % 2)
-		 	lock_from_right_to_left(data, index);
+			lock_from_right_to_left(data, index);
 		else
 			lock_from_left_to_right(data, index);
 		if (is_dead(content))
@@ -65,7 +65,8 @@ static void	lock_from_right_to_left(t_data *data, int index)
 {
 	pthread_mutex_lock(&(data->fork[(index + 1) % data->num_of_philo]));
 	pthread_mutex_lock(&(data->fork[index]));
-	if (data->lock[(index + 1) % data->num_of_philo] == -1 && data->lock[index] == -1)
+	if (data->lock[(index + 1) % data->num_of_philo] == -1
+		&& data->lock[index] == -1)
 	{
 		data->lock[(index + 1) % data->num_of_philo] = index;
 		data->lock[index] = index;
@@ -80,7 +81,8 @@ static void	lock_from_left_to_right(t_data *data, int index)
 {
 	pthread_mutex_lock(&(data->fork[index]));
 	pthread_mutex_lock(&(data->fork[(index + 1) % data->num_of_philo]));
-	if (data->lock[index] == -1 && data->lock[(index + 1) % data->num_of_philo] == -1)
+	if (data->lock[index] == -1
+		&& data->lock[(index + 1) % data->num_of_philo] == -1)
 	{
 		data->lock[index] = index;
 		data->lock[(index + 1) % data->num_of_philo] = index;

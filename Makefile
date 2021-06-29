@@ -6,11 +6,12 @@
 #    By: dcavalei <dcavalei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/21 12:29:07 by dcavalei          #+#    #+#              #
-#    Updated: 2021/06/28 14:12:31 by dcavalei         ###   ########.fr        #
+#    Updated: 2021/06/29 12:18:43 by dcavalei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC			= $(shell find src -type f -name "*.c")
+HDR			= $(shell find inc -type f -name "*.h")
 OBJ			= $(SRC:.c=.o)
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror -g -pthread
@@ -25,7 +26,7 @@ all:		$(NAME)
 			@echo "Creating object: $@"
 			@$(CC) $(CFLAGS) -Iinc -c $< -o $@
 
-$(NAME):	$(OBJ)
+$(NAME):	$(OBJ) $(HDR)
 			@$(CC) -o $(NAME) $(CFLAGS) -Iinc $(OBJ)
 
 clean:

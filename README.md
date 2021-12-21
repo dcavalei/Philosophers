@@ -1,2 +1,1 @@
-# Philosophers
-42 School Philosophers project
+<a href="https://github.com/dcavalei/Philosophers/blob/main/resources/subject.pdf" target="_blank"> <img src="https://user-images.githubusercontent.com/80326272/146931456-5beb2eea-db53-4600-a75d-e4bcbfe541d9.png" > </a>
